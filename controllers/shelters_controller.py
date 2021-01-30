@@ -1,4 +1,6 @@
 from models.Shelter import Shelter
+from models.Animal import Animal
+from schemas.AnimalSchema import animals_schema
 from main import db
 from schemas.ShelterSchema import shelter_schema, shelters_schema
 from flask import Blueprint, request, jsonify
@@ -61,3 +63,11 @@ def shelter_update(id):
     shelter.update(shelter_fields)                                                  # update shelter with requested data from shelter_fields
     db.session.commit()                                                             # commit data to db session
     return jsonify(shelter_schema.dump(shelter[0]))
+
+@shelters.route("/<int:id>/animals", methods=["GET"])
+def shelter_animals_index(id):
+    """
+    Index of all animals at shelter using id.
+    """
+    animal = Animal.query.filter_by(shelter_id=id)
+    return jsonify(animals_schema.dump(animal))
