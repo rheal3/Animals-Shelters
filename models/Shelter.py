@@ -1,11 +1,9 @@
 from main import db
 
 class Shelter(db.Model):
-    # name table has in database
-    __tablename__ = "shelters"
+    __tablename__ = "shelters"                                                      # name table has in database
 
-    # each column in shelters table & datatype to be entered
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)                                    # each column in shelters table & datatype to be entered
     name = db.Column(db.String)
     email = db.Column(db.String)
     phone = db.Column(db.String)

@@ -14,14 +14,13 @@ def shelter_index():
     return jsonify(shelters_schema.dump(shelters))                                  # convert shelters query result into json using shelters_schema
 
 @shelters.route("/", methods=["POST"])
-def create_shelter():
+def shelter_create():
     """
         Create a new shelter.
     """
     shelter_fields = shelter_schema.load(request.json)                              # info sent to site from user (insomnia request)
     
     new_shelter = Shelter()                                                         # create new shelter object from model & fill with data from request
-    
     new_shelter.name = shelter_fields["name"]
     new_shelter.email = shelter_fields["email"]
     new_shelter.phone = shelter_fields["phone"]
@@ -30,4 +29,35 @@ def create_shelter():
     
     db.session.add(new_shelter)                                                     # add new_shelter to database
     db.session.commit()                                                             # commit added data to database
-    return jsonify(shelter_schema.dump(new_shelter))
+    return jsonify(shelter_schema.dump(new_shelter))                                # converts to json using schema
+
+@shelters.route("/<int:id>", methods=["GET"])
+def shelter_show(id):
+    """
+        Show data for single shelter using id.
+    """
+    shelter = Shelter.query.get(id)                                                 # query single shelter using id
+    return jsonify(shelter_schema.dump(shelter))                                    # converts to json using schema & returns json data                              
+
+@shelters.route("/<int:id>", methods=["DELETE"])
+def shelter_delete(id):
+    """
+        Delete shelter from database using id.
+    """
+    shelter = Shelter.query.get(id)                                                 # get shelter to delete
+    if not shelter:
+        return "DELETED"
+    db.session.delete(shelter)                                                      # delete from db
+    db.session.commit()                                                             # commit changes to db session
+    return jsonify(shelter_schema.dump(shelter))                                    # return deleted shelter
+
+@shelters.route("/<int:id>", methods=["PUT", "PATCH"])
+def shelter_update(id):
+    """
+        Update shelter data using id.
+    """
+    shelter = Shelter.query.filter_by(id=id)                                        # filter_by returns an array of elements by default
+    shelter_fields = shelter_schema.load(request.json)                              # load shelter fields using schema from user request (insomnia request)
+    shelter.update(shelter_fields)                                                  # update shelter with requested data from shelter_fields
+    db.session.commit()                                                             # commit data to db session
+    return jsonify(shelter_schema.dump(shelter[0]))

@@ -8,6 +8,10 @@ animals -> id, name, kind, breed, age
 
 
 MVC
+- main
+    - runs flask application
+- database
+    - accesses database
 1. models
     - database info
         - what columns are in the table 
@@ -20,4 +24,8 @@ MVC
 3. schemas
     - used to turn data into json
     - imports marshmallow & model
+
+    - <schema_name>.dump() for GET
+    - <schema_name>.load() for PUT
+
 
