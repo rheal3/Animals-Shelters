@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<br>
+    <div class="col px-md-5"><div class="p-3 border bg-light">
+        <div class="card" >
+            <div class="card-body">
+                <h5 class="card-title">{{shelter.name}}</h5>
+                <h6 class="card-subtitle mb-2 text-muted">{{shelter.phone}}</h6>
+                <h6 class="card-subtitle mb-2 text-muted">{{shelter.email}}</h6>
+                <p class="card-text">{{shelter.address}}, {{shelter.city}}</p>
+                <a href="/shelters" class="card-link">Go Back</a>
+                <a href="/shelters/{{shelter.id}}/animals" class="card-link">Animals @ {{shelter.name}}</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

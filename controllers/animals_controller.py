@@ -1,7 +1,7 @@
 from models.Animal import Animal
 from main import db
 from schemas.AnimalSchema import animal_schema, animals_schema
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, render_template
 
 animals = Blueprint("animals", __name__, url_prefix="/animals")
 
@@ -11,7 +11,8 @@ def animal_index():
     Returns index of all animals.
     """
     animals = Animal.query.all()
-    return jsonify(animals_schema.dump(animals))
+    # return jsonify(animals_schema.dump(animals))
+    return render_template("animal_index.html", animals=animals)
 
 @animals.route("/", methods=["POST"])
 def animal_create():
@@ -37,7 +38,8 @@ def animal_show(id):
     Show single animal using id.
     """
     animal = Animal.query.get(id)
-    return jsonify(animal_schema.dump(animal))
+    # return jsonify(animal_schema.dump(animal))
+    return render_template("animal_show.html", animal=animal)
 
 @animals.route("/<int:id>", methods=["DELETE"])
 def animal_delete(id):

@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    {% for animal in animals %}
+    <br>
+    <div class="col px-md-5"><div class="p-3 border bg-light">
+                <div class="card" >
+                    <div class="card-body">
+                        <h5 class="card-title">{{animal.name}}</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">{{animal.breed}}</h6>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        <a href="/animals/{{animal.id}}" class="card-link">More Details</a>
+                        <a href="/shelters/{{animal.shelter_id}}" class="card-link">Location</a>
+                    </div>
+                </div>
+            </div>
+    </div>
+    {% endfor %}
+{% endblock %}

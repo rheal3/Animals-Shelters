@@ -3,7 +3,7 @@ from models.Animal import Animal
 from schemas.AnimalSchema import animals_schema
 from main import db
 from schemas.ShelterSchema import shelter_schema, shelters_schema
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, render_template
 
 shelters = Blueprint("shelters", __name__, url_prefix="/shelters")                  # create blueprint for shelters
 
@@ -13,7 +13,8 @@ def shelter_index():
         Returns index of all shelters.
     """
     shelters = Shelter.query.all()                                                  # same as select * from shelters, accesses through model->db
-    return jsonify(shelters_schema.dump(shelters))                                  # convert shelters query result into json using shelters_schema
+    # return jsonify(shelters_schema.dump(shelters))                                  # convert shelters query result into json using shelters_schema
+    return render_template("shelter_index.html", shelters=shelters)                 # renders template using html file to website
 
 @shelters.route("/", methods=["POST"])
 def shelter_create():
@@ -39,7 +40,8 @@ def shelter_show(id):
         Show data for single shelter using id.
     """
     shelter = Shelter.query.get(id)                                                 # query single shelter using id
-    return jsonify(shelter_schema.dump(shelter))                                    # converts to json using schema & returns json data                              
+    # return jsonify(shelter_schema.dump(shelter))                                    # converts to json using schema & returns json data                              
+    return render_template("shelter_show.html", shelter=shelter)
 
 @shelters.route("/<int:id>", methods=["DELETE"])
 def shelter_delete(id):
@@ -69,5 +71,6 @@ def shelter_animals_index(id):
     """
     Index of all animals at shelter using id.
     """
-    animal = Animal.query.filter_by(shelter_id=id)
-    return jsonify(animals_schema.dump(animal))
+    animals = Animal.query.filter_by(shelter_id=id)
+    # return jsonify(animals_schema.dump(animals))
+    return render_template("animal_index.html", animals=animals )
