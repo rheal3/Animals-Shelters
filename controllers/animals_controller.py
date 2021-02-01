@@ -2,6 +2,7 @@ from models.Animal import Animal
 from main import db
 from schemas.AnimalSchema import animal_schema, animals_schema
 from flask import Blueprint, request, jsonify, render_template
+from models.Animal import AnimalForm
 
 animals = Blueprint("animals", __name__, url_prefix="/animals")
 
@@ -14,23 +15,30 @@ def animal_index():
     # return jsonify(animals_schema.dump(animals))
     return render_template("animal_index.html", animals=animals)
 
-@animals.route("/", methods=["POST"])
+# @animals.route("/", methods=["POST"])
+# def animal_create():
+#     """
+#     Create new animal.
+#     """
+#     animal_fields = animal_schema.load(request.json)
+
+#     new_animal = Animal()
+#     new_animal.name = animal_fields["name"]
+#     new_animal.kind = animal_fields["kind"]
+#     new_animal.breed = animal_fields["breed"]
+#     new_animal.age = animal_fields["age"]
+#     new_animal.shelter_id = animal_fields["shelter_id"]
+
+#     db.session.add(new_animal)
+#     db.session.commit()
+#     return jsonify(animal_schema.dump(new_animal))
+
+@animals.route('/create', methods=['GET', 'POST'])
 def animal_create():
-    """
-    Create new animal.
-    """
-    animal_fields = animal_schema.load(request.json)
-
-    new_animal = Animal()
-    new_animal.name = animal_fields["name"]
-    new_animal.kind = animal_fields["kind"]
-    new_animal.breed = animal_fields["breed"]
-    new_animal.age = animal_fields["age"]
-    new_animal.shelter_id = animal_fields["shelter_id"]
-
-    db.session.add(new_animal)
-    db.session.commit()
-    return jsonify(animal_schema.dump(new_animal))
+    form = AnimalForm(request.form)
+    if request.method == 'POST' and form.validate_on_submit():
+        return 'Animal Added!'
+    return render_template('animal_create.html', form=form)
 
 @animals.route("/<int:id>", methods=["GET"])
 def animal_show(id):

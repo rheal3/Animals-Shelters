@@ -1,11 +1,10 @@
-from main import db
+from wtforms import SubmitField, BooleanField, StringField, PasswordField, validators
+from flask_wtf import Form
 
-class Shelter(db.Model):
-    __tablename__ = "shelters"                                                      # name table has in database
-
-    id = db.Column(db.Integer, primary_key=True)                                    # each column in shelters table & datatype to be entered
-    name = db.Column(db.String)
-    email = db.Column(db.String)
-    phone = db.Column(db.String)
-    address = db.Column(db.String)
-    city = db.Column(db.String)
+class ShelterForm(Form):
+    name = StringField('Shelter Name', [validators.DataRequired()])
+    email = StringField('Shelter Email', [validators.DataRequired(), validators.Email(), validators.Length(min=6, max=35)])
+    phone = StringField('Shelter Phone', [validators.DataRequired()])
+    address = StringField('Shelter Address', [validators.DataRequired()])
+    city = StringField('Shelter City', [validators.DataRequired()])
+    submit = SubmitField('Submit')
