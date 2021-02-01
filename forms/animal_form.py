@@ -1,7 +1,7 @@
 from wtforms import SubmitField, BooleanField, StringField, PasswordField, validators
-from flask_wtf import Form
+from flask_wtf import FlaskForm
 
-class AnimalForm(Form):
+class AnimalForm(FlaskForm):
     name = StringField('Animal Name', [validators.DataRequired()])
     kind = StringField('Animal Kind', [validators.DataRequired()])
     breed = StringField('Animal Breed', [validators.DataRequired()])
