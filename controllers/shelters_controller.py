@@ -39,6 +39,18 @@ def shelter_index():
 def shelter_create():
     form = ShelterForm(request.form)
     if request.method == 'POST' and form.validate_on_submit():
+        shelter_fields = request.form                                                   # get data from submitted form
+        
+        new_shelter = Shelter()                                                         # create new shelter object from model & fill with data from request
+        new_shelter.name = shelter_fields["name"]
+        new_shelter.email = shelter_fields["email"]
+        new_shelter.phone = shelter_fields["phone"]
+        new_shelter.address = shelter_fields["address"]
+        new_shelter.city = shelter_fields["city"]
+        
+        db.session.add(new_shelter)                                                     # add new_shelter to database
+        db.session.commit()                                                             # commit added data to database
+
         return 'Shelter Added!'
     return render_template('shelter_create.html', form=form)
 

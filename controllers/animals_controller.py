@@ -37,6 +37,17 @@ def animal_index():
 def animal_create():
     form = AnimalForm(request.form)
     if request.method == 'POST' and form.validate_on_submit():
+        animal_fields = request.form
+        new_animal = Animal()
+        new_animal.name = animal_fields["name"]
+        new_animal.kind = animal_fields["kind"]
+        new_animal.breed = animal_fields["breed"]
+        new_animal.age = animal_fields["age"]
+        new_animal.shelter_id = animal_fields["shelter_id"]
+
+        db.session.add(new_animal)
+        db.session.commit()
+        # return jsonify(animal_schema.dump(new_animal))
         return 'Animal Added!'
     return render_template('animal_create.html', form=form)
 

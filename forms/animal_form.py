@@ -6,4 +6,5 @@ class AnimalForm(FlaskForm):
     kind = StringField('Animal Kind', [validators.DataRequired()])
     breed = StringField('Animal Breed', [validators.DataRequired()])
     age = StringField('Animal Age', [validators.DataRequired()])
+    shelter_id = StringField('Shelter ID', [validators.DataRequired()])
     submit = SubmitField('Submit')

@@ -4,7 +4,7 @@
 <div class="container">
   <h3>Animals&Shelters</h3>
   <hr>
-  <form action="" method="post" class="form" role="form">
+  <form action="/animals/create" method="post" class="form" role="form">
     {{ form.csrf_token() }}
 
     <div class="row">
@@ -19,6 +19,9 @@
       </div>
       <div class="form-group col-md-6">
         {{ wtf.form_field(form.age, class='form-control', placeholder='Animal age') }}
+      </div>
+      <div class="form-group col-md-6">
+        {{ wtf.form_field(form.shelter_id, class='form-control', placeholder='Shelter ID') }}
       </div>
     </div>
 
