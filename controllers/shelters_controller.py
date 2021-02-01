@@ -4,7 +4,7 @@ from schemas.AnimalSchema import animals_schema
 from main import db
 from schemas.ShelterSchema import shelter_schema, shelters_schema
 from flask import Blueprint, request, jsonify, render_template
-from models.Shelter import ShelterForm
+from forms.shelter_form import ShelterForm
 
 shelters = Blueprint("shelters", __name__, url_prefix="/shelters")                  # create blueprint for shelters
 

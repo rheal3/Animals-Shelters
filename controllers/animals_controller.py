@@ -2,7 +2,7 @@ from models.Animal import Animal
 from main import db
 from schemas.AnimalSchema import animal_schema, animals_schema
 from flask import Blueprint, request, jsonify, render_template
-from models.Animal import AnimalForm
+from forms.animal_form import AnimalForm
 
 animals = Blueprint("animals", __name__, url_prefix="/animals")
 

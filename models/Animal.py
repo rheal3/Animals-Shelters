@@ -1,9 +1,11 @@
-from wtforms import SubmitField, BooleanField, StringField, PasswordField, validators
-from flask_wtf import Form
+from main import db
 
-class AnimalForm(Form):
-    name = StringField('Animal Name', [validators.DataRequired()])
-    kind = StringField('Animal Kind', [validators.DataRequired()])
-    breed = StringField('Animal Breed', [validators.DataRequired()])
-    age = StringField('Animal Age', [validators.DataRequired()])
-    submit = SubmitField('Submit')
+class Animal(db.Model):
+    __tablename__ = "animals"
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String)
+    kind = db.Column(db.String)
+    breed = db.Column(db.String)
+    age = db.Column(db.String)
+    shelter_id = db.Column(db.Integer)
